@@ -228,6 +228,7 @@ function defaultOptions(){
       , head: ['red']
       , border: ['grey']
       , compact : false
+      , empty: []
     }
     , head: []
   };

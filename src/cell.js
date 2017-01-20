@@ -221,14 +221,18 @@ Cell.prototype.drawLine = function(lineNum,drawRight,forceTruncationSymbol,spann
       left = this.chars['rightMid'];
     }
   }
-  var leftPadding = utils.repeat(colors[this.empty](' '), this.paddingLeft);
+  var space;
+  this.empty.map(function (style) {
+      space = colors[style](space);
+  });
+  var leftPadding = utils.repeat(space, this.paddingLeft);
   var right = (drawRight ? this.chars['right'] : '');
-  var rightPadding = utils.repeat(colors[this.empty](' '), this.paddingRight);
+  var rightPadding = utils.repeat(space, this.paddingRight);
   var line = this.lines[lineNum];
   var len = this.width - (this.paddingLeft + this.paddingRight);
   if(forceTruncationSymbol) line += this.truncate || '…';
   var content = utils.truncate(line,len,this.truncate);
-  content = utils.pad(content, len, colors[this.empty](' '), this.hAlign);
+  content = utils.pad(content, len, space, this.hAlign);
   content = leftPadding + content + rightPadding;
   return this.stylizeLine(left,content,right);
 };
