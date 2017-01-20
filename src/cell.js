@@ -221,7 +221,7 @@ Cell.prototype.drawLine = function(lineNum,drawRight,forceTruncationSymbol,spann
       left = this.chars['rightMid'];
     }
   }
-  var space;
+  var space = ' ';
   this.empty.map(function (style) {
       space = colors[style](space);
   });
