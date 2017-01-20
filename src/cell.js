@@ -1,3 +1,4 @@
+var colors = require('colors');
 var kindOf = require('kind-of');
 var utils = require('./utils');
 
@@ -48,6 +49,7 @@ Cell.prototype.mergeTableOptions = function(tableOptions,cells){
   setOption(style, tableStyle, 'padding-right', this);
   this.head = style.head || tableStyle.head;
   this.border = style.border || tableStyle.border;
+  this.empty = style.empty || tableStyle.empty;
 
   var fixedWidth = tableOptions.colWidths[this.x];
   if(tableOptions.wordWrap && fixedWidth){
@@ -219,14 +221,14 @@ Cell.prototype.drawLine = function(lineNum,drawRight,forceTruncationSymbol,spann
       left = this.chars['rightMid'];
     }
   }
-  var leftPadding = utils.repeat(' ', this.paddingLeft);
+  var leftPadding = utils.repeat(colors[this.empty](' '), this.paddingLeft);
   var right = (drawRight ? this.chars['right'] : '');
-  var rightPadding = utils.repeat(' ', this.paddingRight);
+  var rightPadding = utils.repeat(colors[this.empty](' '), this.paddingRight);
   var line = this.lines[lineNum];
   var len = this.width - (this.paddingLeft + this.paddingRight);
   if(forceTruncationSymbol) line += this.truncate || '…';
   var content = utils.truncate(line,len,this.truncate);
-  content = utils.pad(content, len, ' ', this.hAlign);
+  content = utils.pad(content, len, colors[this.empty](' '), this.hAlign);
   content = leftPadding + content + rightPadding;
   return this.stylizeLine(left,content,right);
 };
